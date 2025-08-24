@@ -17,4 +17,4 @@ EXPOSE 7801
 
 COPY --from=MAVEN /build/target/btc-svc-manager.jar /app/
 
-ENTRYPOINT ["java", "-jar", "bt-svc-manageremstum.jar", "--spring.profiles.active=prod"]
+ENTRYPOINT ["java", "-jar", "btc_svc_manager.jar", "--spring.profiles.active=prod"]

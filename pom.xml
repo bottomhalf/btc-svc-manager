@@ -44,6 +44,6 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
-		<finalName>btc-svc-manager</finalName>
+		<finalName>btc_svc_manager</finalName>
 	</build>
 </project>
