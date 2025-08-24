@@ -4,11 +4,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import io.livekit.server.AccessToken;
 import io.livekit.server.RoomJoin;
@@ -25,6 +21,15 @@ public class Controller {
 
 	@Value("${livekit.api.secret}")
 	private String LIVEKIT_API_SECRET;
+
+
+	/**
+	 * @return JSON object with the JWT token
+	 */
+	@GetMapping(value = "/conference/check")
+	public ResponseEntity<String> checkHealth() {
+		return ResponseEntity.ok("Working");
+	}
 
 	/**
 	 * @param params JSON object with roomName and participantName
