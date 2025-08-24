@@ -14,6 +14,7 @@ import livekit.LivekitWebhook.WebhookEvent;
 
 @CrossOrigin(origins = "*")
 @RestController
+@RequestMapping("/api/conference/")
 public class Controller {
 
 	@Value("${livekit.api.key}")
@@ -26,7 +27,7 @@ public class Controller {
 	/**
 	 * @return JSON object with the JWT token
 	 */
-	@GetMapping(value = "/conference/check")
+	@GetMapping(value = "check")
 	public ResponseEntity<String> checkHealth() {
 		return ResponseEntity.ok("Working");
 	}
@@ -35,7 +36,7 @@ public class Controller {
 	 * @param params JSON object with roomName and participantName
 	 * @return JSON object with the JWT token
 	 */
-	@PostMapping(value = "/conference/token")
+	@PostMapping(value = "token")
 	public ResponseEntity<Map<String, String>> createToken(@RequestBody Map<String, String> params) {
 		String roomName = params.get("roomName");
 		String participantName = params.get("participantName");
@@ -52,7 +53,7 @@ public class Controller {
 		return ResponseEntity.ok(Map.of("token", token.toJwt()));
 	}
 
-	@PostMapping(value = "/livekit/webhook", consumes = "application/webhook+json")
+	@PostMapping(value = "livekit/webhook", consumes = "application/webhook+json")
 	public ResponseEntity<String> receiveWebhook(@RequestHeader("Authorization") String authHeader, @RequestBody String body) {
 		WebhookReceiver webhookReceiver = new WebhookReceiver(LIVEKIT_API_KEY, LIVEKIT_API_SECRET);
 		try {
