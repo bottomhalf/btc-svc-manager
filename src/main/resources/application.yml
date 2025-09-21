@@ -1,0 +1,31 @@
+server:
+  port: ${SERVER_PORT:7801}
+  ssl:
+    enabled: false
+
+spring:
+  application:
+    name: basic-java
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://145.223.22.73:30002/
+    username: root
+    password: live@Bottomhalf_001
+    database: btc_meets
+
+
+  # LiveKit configuration
+livekit:
+  api:
+    key: APIJByNUPVKqDS8
+    secret: mcv0eMRL9uSw3fAna0jkDjxs4ZKBvpAM5WV9k3fOvk4B
+
+fierhub:
+  repository:
+    token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2Nlc3MiOiJhbnkiLCJuYmYiOjE3NTc4NjI0NDYsImV4cCI6MTc3MDIwODEyNCwiaWF0IjoxNzU3ODYyNDQ2fQ.85Z3XB04cJY_Lw_sS-bngg5W85V5lmtcW1-9HyOFpaQ_7
+    url: https://www.fierhub.com/api/fileContent/readFile/6
+  authorize:
+    urls:
+      - /api/auth/authenticateUser
+      - /api/auth

@@ -33,7 +33,7 @@ public class AuthenticateService implements IAuthenticateService {
         if (loginDetail.getPassword() == null || loginDetail.getPassword().isEmpty())
             throw new Exception("Please enter password");
 
-        var userDetail = getUserByEmailOrMobile(loginDetail.getEmail(), loginDetail.getPassword());
+        var userDetail = getUserByEmailOrMobile(loginDetail.getEmail(), null);
 
         String userDetailJson = mapper.writeValueAsString(userDetail);
         Map<String, Object> claims = new HashMap<>(Map.of(
@@ -70,7 +70,7 @@ public class AuthenticateService implements IAuthenticateService {
     }
 
     private LoginDetail getUserByEmailOrMobile(String email, String mobile) throws Exception {
-        var loginDetail = dbProcedureManager.execute("sp_user_login_Auth",
+        var loginDetail = dbProcedureManager.execute("sp_login_auth",
                 Arrays.asList(
                         new DbParameters("_mobile", mobile, Types.VARCHAR),
                         new DbParameters("_email", email, Types.VARCHAR)
