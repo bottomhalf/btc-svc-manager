@@ -1,7 +1,7 @@
 package bt.conference.service;
 
 import bt.conference.model.ApplicationConstant;
-import bt.conference.model.LoginDetail;
+import bt.conference.entity.LoginDetail;
 import bt.conference.model.LoginResponse;
 import bt.conference.serviceinterface.IAuthenticateService;
 import com.fasterxml.jackson.databind.ObjectMapper;
