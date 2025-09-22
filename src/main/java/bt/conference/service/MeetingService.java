@@ -1,21 +1,30 @@
 package bt.conference.service;
 
+import bt.conference.entity.LoginDetail;
 import bt.conference.entity.UserDetail;
 import bt.conference.model.ApplicationConstant;
 import bt.conference.entity.MeetingDetail;
 import bt.conference.serviceinterface.IMeetingService;
 import com.fierhub.model.CurrentSession;
 import in.bottomhalf.ps.database.service.DbManager;
+import in.bottomhalf.ps.database.utils.DbParameters;
+import in.bottomhalf.ps.database.utils.DbProcedureManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.sql.Types;
+import java.util.Arrays;
+import java.util.List;
 
 @Service
 public class MeetingService implements IMeetingService {
     @Autowired
     CurrentSession currentSession;
     @Autowired
+    DbProcedureManager dbProcedureManager;
+    @Autowired
     DbManager dbManager;
-    public MeetingDetail generateMeetingService(MeetingDetail meetingDetail) throws Exception {
+    public List<MeetingDetail> generateMeetingService(MeetingDetail meetingDetail) throws Exception {
         if (meetingDetail.getTitle() == null || meetingDetail.getTitle().isEmpty())
             throw new Exception("Invalid meeting title");
 
@@ -33,6 +42,24 @@ public class MeetingService implements IMeetingService {
 
         dbManager.save(meetingDetail);
 
-        return meetingDetail;
+        return getAllMeetingByOrganizerService();
+    }
+
+    public List<MeetingDetail> getAllMeetingByOrganizerService() throws Exception {
+
+        return dbProcedureManager.getRecords("sp_get_all_meeting_userid",
+                Arrays.asList(
+                        new DbParameters("_userid", currentSession.getUserId(), Types.BIGINT)
+                ),
+                MeetingDetail.class
+        );
+    }
+
+    public List<MeetingDetail> generateQuickMeetingService(MeetingDetail meetingDetail) throws Exception {
+        meetingDetail.setDurationInSecond(50000);
+        java.util.Date utilDate = new java.util.Date();
+        var date = new java.sql.Timestamp(utilDate.getTime());
+        meetingDetail.setStartDate(date);
+        return generateMeetingService(meetingDetail);
     }
 }
