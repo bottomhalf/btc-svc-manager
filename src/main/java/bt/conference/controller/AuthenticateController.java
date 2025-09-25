@@ -1,6 +1,6 @@
 package bt.conference.controller;
 
-import bt.conference.model.LoginDetail;
+import bt.conference.entity.LoginDetail;
 import bt.conference.serviceinterface.IAuthenticateService;
 import in.bottomhalf.common.models.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -29,4 +29,5 @@ fierhub:
     urls:
       - /api/auth/authenticateUser
       - /api/auth
+      - /api/conference/token
 
