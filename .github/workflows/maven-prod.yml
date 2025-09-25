@@ -32,9 +32,9 @@ jobs:
         docker build \
           --build-arg REPOSITORY_USERNAME=${{ secrets.REPOSITORY_USERNAME }} \
           --build-arg REPOSITORY_TOKEN=${{ secrets.REPOSITORY_TOKEN }} \
-          -t bottomhalflimited/conf.svc.manager:latest .
+          -t bottomhalflimited/conf.svc.manager:dev-2509 .
         echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
-        docker push bottomhalflimited/conf.svc.manager:latest        
+        docker push bottomhalflimited/conf.svc.manager:dev-2509        
 
     - name: SSH to Remote server and deploy
       run: |
