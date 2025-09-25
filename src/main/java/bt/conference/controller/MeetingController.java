@@ -30,4 +30,5 @@ public class MeetingController {
         var result = _meetingService.generateQuickMeetingService(meetingDetail);
         return ResponseEntity.ok(ApiResponse.Ok(result));
     }
+
 }
