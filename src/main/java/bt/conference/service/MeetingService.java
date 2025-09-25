@@ -1,6 +1,5 @@
 package bt.conference.service;
 
-import bt.conference.entity.LoginDetail;
 import bt.conference.entity.UserDetail;
 import bt.conference.model.ApplicationConstant;
 import bt.conference.entity.MeetingDetail;
@@ -56,10 +55,17 @@ public class MeetingService implements IMeetingService {
     }
 
     public List<MeetingDetail> generateQuickMeetingService(MeetingDetail meetingDetail) throws Exception {
-        meetingDetail.setDurationInSecond(50000);
+        meetingDetail.setDurationInSecond(36000);
         java.util.Date utilDate = new java.util.Date();
         var date = new java.sql.Timestamp(utilDate.getTime());
         meetingDetail.setStartDate(date);
         return generateMeetingService(meetingDetail);
+    }
+
+    public  void validateMeetingIdService(MeetingDetail meetingDetail) throws Exception {
+        if (meetingDetail.getMeetingId() == null || meetingDetail.getMeetingId().isEmpty())
+            throw new Exception("Invalid meeting id passed");
+
+
     }
 }
