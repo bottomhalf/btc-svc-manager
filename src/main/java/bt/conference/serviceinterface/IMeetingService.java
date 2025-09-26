@@ -9,4 +9,5 @@ public interface IMeetingService {
     List<MeetingDetail> getAllMeetingByOrganizerService() throws Exception;
     List<MeetingDetail> generateQuickMeetingService(MeetingDetail meetingDetail) throws Exception;
     MeetingDetail validateMeetingService(MeetingDetail meetingDetail) throws Exception;
+    MeetingDetail validateMeetingIdPassCodeService(MeetingDetail meetingDetail) throws Exception;
 }

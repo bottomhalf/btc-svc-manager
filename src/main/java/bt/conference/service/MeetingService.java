@@ -1,7 +1,7 @@
 package bt.conference.service;
 
-import bt.conference.entity.UserDetail;
 import bt.conference.entity.MeetingDetail;
+import bt.conference.entity.UserDetail;
 import bt.conference.serviceinterface.IMeetingService;
 import com.fierhub.model.CurrentSession;
 import in.bottomhalf.ps.database.service.DbManager;
@@ -32,6 +32,8 @@ public class MeetingService implements IMeetingService {
         if (meetingDetail.getDurationInSecond() <= 0)
             throw new Exception("Invalid meeting duration");
 
+        var convertedDate = UtilService.toUtc(meetingDetail.getStartDate());
+        meetingDetail.setStartDate(convertedDate);
         meetingDetail.setHasQuickMeeting(false);
         addMeetingDetail(meetingDetail);
 
@@ -95,5 +97,22 @@ public class MeetingService implements IMeetingService {
             sb.append(CHARACTERS.charAt(random.nextInt(CHARACTERS.length())));
         }
         return sb.toString();
+    }
+
+    public MeetingDetail validateMeetingIdPassCodeService(MeetingDetail meetingDetail) throws Exception {
+        if (meetingDetail.getMeetingPassword() == null || meetingDetail.getMeetingPassword().isEmpty())
+            throw new Exception("Invalid meeting passcode");
+
+        if (meetingDetail.getMeetingId() == null || meetingDetail.getMeetingId().isEmpty())
+            throw new Exception("Invalid meeting id passed");
+
+        var existingMeetingDetail = dbManager.getById(meetingDetail.getMeetingDetailId(), MeetingDetail.class);
+        if (existingMeetingDetail == null)
+            throw new Exception("Meeting detail not found");
+
+        if (!existingMeetingDetail.getMeetingPassword().equals(meetingDetail.getMeetingPassword()))
+            throw new Exception("Invalid meeting passcode. Please contact to admin");
+
+        return existingMeetingDetail;
     }
 }
