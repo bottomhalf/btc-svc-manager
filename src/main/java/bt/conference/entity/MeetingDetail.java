@@ -42,4 +42,7 @@ public class MeetingDetail {
 
     @Transient
     String organizerName;
+
+    @Column(name = "hasQuickMeeting")
+    boolean hasQuickMeeting;
 }

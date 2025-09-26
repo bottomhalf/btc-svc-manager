@@ -31,4 +31,15 @@ public class MeetingController {
         return ResponseEntity.ok(ApiResponse.Ok(result));
     }
 
+    @PostMapping("validateMeeting")
+    public ResponseEntity<ApiResponse> validateMeeting(@RequestBody MeetingDetail meetingDetail) throws Exception {
+        var result = _meetingService.validateMeetingService(meetingDetail);
+        return ResponseEntity.ok(ApiResponse.Ok(result));
+    }
+
+    @PostMapping("validateMeetingIdPassCode")
+    public ResponseEntity<ApiResponse> validateMeetingIdPassCode(@RequestBody MeetingDetail meetingDetail) throws Exception {
+        var result = _meetingService.validateMeetingIdPassCodeService(meetingDetail);
+        return ResponseEntity.ok(ApiResponse.Ok(result));
+    }
 }

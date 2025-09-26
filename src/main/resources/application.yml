@@ -30,3 +30,4 @@ fierhub:
       - /api/auth/authenticateUser
       - /api/auth
       - /api/conference/token
+      - /api/meeting/validateMeeting
