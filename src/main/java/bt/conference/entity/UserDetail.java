@@ -1,4 +1,4 @@
-package bt.conference.model;
+package bt.conference.entity;
 
 import in.bottomhalf.ps.database.annotations.Column;
 import in.bottomhalf.ps.database.annotations.Id;
@@ -10,24 +10,15 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "login")
-public class LoginDetail {
+@Table(name = "users")
+public class UserDetail {
     @Id
-    @Column(name = "loginId")
-    long loginId;
-
-    @Column(name = "email")
-    String email;
-
-    @Column(name = "password")
-    String password;
-
     @Column(name = "userId")
     long userId;
 
-    @Column(name= "firstName")
+    @Column(name = "firstName")
     String firstName;
 
-    @Column(name= "lastName")
+    @Column(name="lastName")
     String lastName;
 }
