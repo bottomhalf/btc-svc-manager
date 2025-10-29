@@ -2,7 +2,7 @@ package bt.conference.service;
 
 import bt.conference.entity.UserDetail;
 import bt.conference.serviceinterface.IUserService;
-import in.bottomhalf.ps.database.service.DbManager;
+import com.fierhub.database.service.DbManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

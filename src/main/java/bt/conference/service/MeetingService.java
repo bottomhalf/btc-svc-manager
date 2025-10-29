@@ -3,10 +3,10 @@ package bt.conference.service;
 import bt.conference.entity.MeetingDetail;
 import bt.conference.entity.UserDetail;
 import bt.conference.serviceinterface.IMeetingService;
-import com.fierhub.model.CurrentSession;
-import in.bottomhalf.ps.database.service.DbManager;
-import in.bottomhalf.ps.database.utils.DbParameters;
-import in.bottomhalf.ps.database.utils.DbProcedureManager;
+import com.fierhub.database.service.DbManager;
+import com.fierhub.database.utils.DbParameters;
+import com.fierhub.database.utils.DbProcedureManager;
+import com.fierhub.model.UserSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +18,7 @@ import java.util.List;
 @Service
 public class MeetingService implements IMeetingService {
     @Autowired
-    CurrentSession currentSession;
+    UserSession userSession;
     @Autowired
     DbProcedureManager dbProcedureManager;
     @Autowired
@@ -41,14 +41,14 @@ public class MeetingService implements IMeetingService {
     }
 
     private void addMeetingDetail(MeetingDetail meetingDetail) throws Exception {
-        var user = dbManager.getById(currentSession.getUserId(), UserDetail.class);
+        var user = dbManager.getById(userSession.getUserId(), UserDetail.class);
         if (user == null)
             throw new Exception("User not found");
 
         var fullName = user.getFirstName() + (user.getLastName() != null && !user.getLastName().isEmpty() ? " " + user.getLastName() : "");
-        meetingDetail.setMeetingId(ManageMeetingService.generateToken(currentSession.getUserId(), fullName));
+        meetingDetail.setMeetingId(ManageMeetingService.generateToken(Long.parseLong(userSession.getUserId()), fullName));
         meetingDetail.setMeetingPassword(generatePassword(6));
-        meetingDetail.setOrganizedBy(currentSession.getUserId());
+        meetingDetail.setOrganizedBy(Long.parseLong(userSession.getUserId()));
 
         dbManager.save(meetingDetail);
     }
@@ -57,7 +57,7 @@ public class MeetingService implements IMeetingService {
 
         return dbProcedureManager.getRecords("sp_get_all_meeting_userid",
                 Arrays.asList(
-                        new DbParameters("_userid", currentSession.getUserId(), Types.BIGINT)
+                        new DbParameters("_userid", userSession.getUserId(), Types.BIGINT)
                 ),
                 MeetingDetail.class
         );

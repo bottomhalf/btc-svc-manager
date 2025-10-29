@@ -5,7 +5,7 @@ server:
 
 spring:
   application:
-    name: basic-java
+    name: btc-server
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver

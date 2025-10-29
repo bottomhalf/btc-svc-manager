@@ -5,10 +5,10 @@ import bt.conference.entity.LoginDetail;
 import bt.conference.model.LoginResponse;
 import bt.conference.serviceinterface.IAuthenticateService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fierhub.database.utils.DbParameters;
+import com.fierhub.database.utils.DbProcedureManager;
 import com.fierhub.service.FierhubService;
-import in.bottomhalf.common.models.ApiResponse;
-import in.bottomhalf.ps.database.utils.DbParameters;
-import in.bottomhalf.ps.database.utils.DbProcedureManager;
+import in.bottomhalf.common.models.ApiAuthResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -58,10 +58,10 @@ public class AuthenticateService implements IAuthenticateService {
                 claims.put("roles", ApplicationConstant.User);
         }
 
-        ApiResponse response = fierhubService.generateToken(claims);
+        ApiAuthResponse response = fierhubService.generateToken(claims);
 
         return LoginResponse.builder()
-                .token(response.getResponseBody().toString())
+                .token(response.getAccessToken())
                 .firstName(userDetail.getFirstName())
                 .lastName(userDetail.getLastName())
                 .email(userDetail.getEmail())
