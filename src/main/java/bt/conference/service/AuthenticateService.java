@@ -16,6 +16,7 @@ import java.sql.Types;
 import java.time.Instant;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -33,32 +34,9 @@ public class AuthenticateService implements IAuthenticateService {
         if (loginDetail.getPassword() == null || loginDetail.getPassword().isEmpty())
             throw new Exception("Please enter password");
 
-        var userDetail = getUserByEmailOrMobile(loginDetail.getEmail(), null);
+        LoginDetail userDetail = getUserByEmailOrMobile(loginDetail.getEmail(), null);
 
-        String userDetailJson = mapper.writeValueAsString(userDetail);
-        Map<String, Object> claims = new HashMap<>(Map.of(
-                "userDetail", userDetailJson,
-                "userId",  String.valueOf(userDetail.getUserId()),
-                "email", userDetail.getEmail(),
-                "firstname", userDetail.getFirstName(),
-                "lastname", userDetail.getLastName(),
-                "code", "BTC",
-                "expiration", Instant.now().plusMillis(1000 * 60 * 60).toString()
-        ));
-
-        var roleId = 1;
-        switch (roleId) {
-            case 1:
-                claims.put("roles", ApplicationConstant.Admin);
-                break;
-            case 3:
-                claims.put("roles", ApplicationConstant.Client);
-                break;
-            default:
-                claims.put("roles", ApplicationConstant.User);
-        }
-
-        ApiAuthResponse response = fierhubService.generateToken(claims);
+        ApiAuthResponse response = fierhubService.generateToken(userDetail, String.valueOf(userDetail.getUserId()), List.of(ApplicationConstant.Admin));
 
         return LoginResponse.builder()
                 .token(response.getAccessToken())
