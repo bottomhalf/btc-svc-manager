@@ -11,7 +11,7 @@
 	</parent>
 
 	<groupId>io.openvidu</groupId>
-	<artifactId>btc-server</artifactId>
+	<artifactId>btc-main-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>btc-server</name>
 	<description>Basic server application built for Java with Spring Boot</description>
